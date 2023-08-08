@@ -1,4 +1,4 @@
-![image](https://github.com/Jiwon96/papers/assets/65645796/df4536fd-4fac-43a6-bc4b-3d3782256231)# 그래프 clustering
+# 그래프 clustering
 * Definition:
   * Short link: 한 그룹내에서 정보를 전달하는 edge
   * long edge: 그룹 간 정보를 전달하는 edge 

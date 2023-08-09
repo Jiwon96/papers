@@ -56,9 +56,16 @@
 
 
 # Kronecker Graph Model -> Erodos-Renyi Random Graph의 대체품 어떻게 만들지?
-* Object는 자기 자신의 일부와 비슷하므로 네트워크를 재귀적으로 구성할 수 있다. (어떤 과정을 위함일까? 얻는 효과는?)
-* Kronecker product를 통해 self-similar 행렬을 만든다. (왜?)
+* Object는 자기 자신의 일부와 비슷하므로 네트워크를 재귀적으로 구성해보자
+* Kronecker product를 통해 self-similar 행렬을 만든다.
+ * Kronecker product<br>![image](https://github.com/Jiwon96/papers/assets/65645796/f83fbd20-e2bd-416a-bfd0-cdb4824327d0)
 * <i>Kronecker graph</i>는 kronecker product를 초기 행렬 $K_1$에 반복적으로 행해 만들 수 있음
   * Stochastic Kronecker graph
-  * Generation of Kronecker graph -><b>숙제</b> 실제 그래프와 유사해짐, 어떻게 만들까? 방법
+   * Step1: $N_1 \times N_1$ probability matrix $\Theta_1$을 만듬
+   * Step2: $k^{th} Kronecker power $Theta_k$를 구함
+   * Step3: Probability of edge $p_{uv}$를 통해서 각 에지에 해당하는 Flip Biased Coins를 던져서 Coins 값에서 True 이면 1로 초기화하고 False이면 0으로 초기화 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c3729cf8-abb6-4786-bc59-fe9465e70bfd)
+  * Generation of Kronecker graph -><b>숙제</b> 실제 그래프와 유사해짐, 어떻게 만들까? 방법 -> bottom up 방식으로 재귀를 이용해 Kronecker product를 수행함
+ 
+* 실제결과와 null model과의 비교<br>![image](https://github.com/Jiwon96/papers/assets/65645796/f60403a2-7df0-45f5-a4f3-1a168bf7f083)
+
 

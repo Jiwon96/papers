@@ -40,18 +40,20 @@
  
 * Expansion :
   * Robustness의 척도가 되고 ?왜?, subset을 쉽게 만들 수 있는 구조면 low expansion, 어려운 구조: high expansion
-  * Robustness는 그래프 G에서 서브셋 S를 만들기 위해서 끊어야 하는 에지 개수가 많을 수록 robust하다고 함 이 때 alpha는 G에서 끊어야 하는 에지의 비율임
+  * Robustness는 그래프 G에서 서브셋 S를 만들기 위해서 끊어야 하는 에지 개수가 많을 수록 robust하다고 함 이 때 alpha는 G에서 끊어야 하는 에지의 비율임<br>![image](https://github.com/Jiwon96/papers/assets/65645796/3cf8c53c-30be-4421-b23c-3336d391512a)
+
  
 * real network와 $G_{np}$비교
   * clustering coefficient, Degree dist가 다르다.
-  * 실제 그래프의 giant componet는 phase transition 형태로 나타나지 않는다? (phase transition은 k=1을 기준으로 giant component가 등장하는 것을 의미)<br>![image](https://github.com/Jiwon96/papers/assets/65645796/dd764472-4ded-4d65-92bf-a0309102ac98)
+  * 실제 그래프의 giant componet는 phase transition 형태로 나타나지 않는다? (phase transition은 k=1을 기준으로 giant component가 등장하는 것을 의미)
 
-<b>숙제</b> : edge와 node를 구성하는 방법? generation이니까 아이디어도 생각해볼 필요 있음, -><b> Erodos-Renyi Random Graph</b> 실제와 비교 지금 나온 아이디어는 현실을 반영 X 특히 현실 네트워크는 tringle 관계가 많이 성립하는데 랜덤으로 한 방법은 이 속성을 만족 X 그리고 주변에서 네트워크를 구성할 때 누가 랜덤으로 구성함? 그래서 대체 아이디어 필요함
+<b>숙제</b> : edge와 node를 구성하는 방법? generation이니까 아이디어도 생각해볼 필요 있음, -><b> Erodos-Renyi Random Graph</b> 아이디어는 현실을 반영 X 특히 현실 네트워크는 tringle 관계가 많이 성립하는데 랜덤으로 한 방법은 이 속성을 만족 X 그리고 주변에서 네트워크를 구성할 때 누가 랜덤으로 구성함? 그래서 대체 아이디어 필요함
  
 # The Small-world model => Erodos-Renyi Random Graph가 제대로 그래프 반영 X 하기 때문에 나옴 보간법으로 만들어보자
 * 높은 clusering coefficient와 큰 diameter를 가지는 regular lattice graph를 <b>interpolation(보간법)</b> 하여 그래프를 만든다. what is interpolation?
 * 결과? or 효과?, 방법?
-  * 숙제
+  * 숙제 -> Small world 모델은 부분 set이나 circle 셋에서 시작해서 다시 edge를 빼거나 추가하면서 rewire를 한다. 이 때 실제 네트워크와 근접하게 Low Diameter로 변하고, high clustering을 갖게 된다. 이러한 아이디어로 small world 모델이 탄생함.<br>![image](https://github.com/Jiwon96/papers/assets/65645796/2dddbb66-dcf7-4a4c-b662-5666ee1b4c1b)
+
 
 # Kronecker Graph Model -> Erodos-Renyi Random Graph의 대체품 어떻게 만들지?
 * Object는 자기 자신의 일부와 비슷하므로 네트워크를 재귀적으로 구성할 수 있다. (어떤 과정을 위함일까? 얻는 효과는?)

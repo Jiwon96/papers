@@ -11,13 +11,15 @@
  
 * Connectivity
   * $s$: 가장 큰 component의 크기
-  * giant component: s가 매우 클 때 기준은?<b>숙제</b>
+  * giant component: s가 매우 클 때 기준은?<b>숙제</b> -> 보통 노드의 절반이상이 component로 구성되어 있으면 giant component라고 하는듯
   * BFS를 통해 모든 노드를 방문했을 때 network가 연결되어 있다고 말하고, 방문하지 않은 노드가 있을 경우는 BFS를 반복한다.
  
 * Path Length
   * 그래프 내 노드 쌍의 최대 거리를 Diameter라고 한다.
   * 평균 path length는 connected graph에 대해서만 계산하고, average h = $\frac{1}{2E_{max}\Sigma_{i,{j \neq i}}}h_{ij}$
   * $h_{ij}$는 노드 i,j의 거리를 $E_{max}$는 엣지의 최대 개수(노드 쌍의 개수)를 의미
+
+* null model: 수치적인 데이터를 기반해서 모델을 generating 시키는 것.
  
 # Erodos-Renyi Random Graph
 * $G_{np}$: 엣지가 독립 항등 분포(iid)의 확률 p를 가지는 노드 n에 대한 undirected graph => 얘만 집중

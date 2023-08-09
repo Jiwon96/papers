@@ -11,7 +11,7 @@
  
 * Connectivity
   * $s$: 가장 큰 component의 크기
-  * giant component: s가 매우 클 때 기준은?
+  * giant component: s가 매우 클 때 기준은?<b>숙제</b>
   * BFS를 통해 모든 노드를 방문했을 때 network가 연결되어 있다고 말하고, 방문하지 않은 노드가 있을 경우는 BFS를 반복한다.
  
 * Path Length
@@ -30,7 +30,7 @@
 * Clustering Coeff
   * E[$C_i$] = p = $\frac{kbar}{n-1}$ ~~ $\frac{kbar}{n}$
  
-* Connected Component: 뭐에 쓰려나?
+* Connected Component: 뭐에 쓰려나? <b>숙제</b>
   * ???
  
 * Expansion :
@@ -39,16 +39,18 @@
 * real network와 $G_{np}$비교
   * clustering coefficient, Degree dist가 다르다.
   * 실제 그래프의 giant componet는 phase transition 형태로 나타나지 않는다? (phase transition은 k=1을 기준으로 giant component가 등장하는 것을 의미)
+
+<b>숙제</b> : edge와 node를 구성하는 방법? generation이니까 아이디어도 생각해볼 필요 있음, 실제와 비교
  
-# The Small-world model
+# The Small-world model => Erodos-Renyi Random Graph가 제대로 그래프 반영 X 하기 때문에 나옴 보간법으로 만들어보자
 * 높은 clusering coefficient와 큰 diameter를 가지는 regular lattice graph를 <b>interpolation(보간법)</b> 하여 그래프를 만든다. what is interpolation?
 * 결과? or 효과?, 방법?
   * 숙제
 
-# Kronecker Graph Model
+# Kronecker Graph Model -> Erodos-Renyi Random Graph의 대체품 어떻게 만들지?
 * Object는 자기 자신의 일부와 비슷하므로 네트워크를 재귀적으로 구성할 수 있다. (어떤 과정을 위함일까? 얻는 효과는?)
 * Kronecker product를 통해 self-similar 행렬을 만든다. (왜?)
 * <i>Kronecker graph</i>는 kronecker product를 초기 행렬 $K_1$에 반복적으로 행해 만들 수 있음
   * Stochastic Kronecker graph
-  * Generation of Kronecker graph -> 실제 그래프와 유사해짐, 어떻게 만들까? 방법
+  * Generation of Kronecker graph -><b>숙제</b> 실제 그래프와 유사해짐, 어떻게 만들까? 방법
 

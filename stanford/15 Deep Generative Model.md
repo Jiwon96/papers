@@ -89,7 +89,7 @@
 * Random node ordering의 경우 edge generation시 이전의 모든 노드들을 고려해야해서 복잡도가 증가하고, long-term dependency 문제가 발생한다. 이를 해결하기 위해 BFS(Breadth-First Search) node ordering을 사용한다.
  * BFS node ordering 이란?
    * 이점 1: Reduce possible node orderings: Random ordering은 $O(n!)$이지만, BFS는 이보다 적음
-   * 이점 2: Reduce steps for edge generation: edge 생성시 인접 노드들과의 관계만 고려할 수 있어 long-term dependency 문제를 해결한다. <b>질문: edge generation을 줄일 수 있다는게 무엇일까?</b>
+   * 이점 2: Reduce steps for edge generation: edge 생성시 인접 노드들과의 관계만 고려할 수 있어 long-term dependency 문제를 해결한다. <b>질문: edge generation을 줄일 수 있다는게 무엇일까?</b> -> M을 설정하면 해당 노드 기준으로 이전 M노드만 보면 됨 -> 그러면 연산량을 매우 줄일 수 있음
 
 # Evaluating Generated Graph
 * 실제와 비교했을 때 얼마나 유사할까?
@@ -135,7 +135,9 @@
     
    * GCPN은 RL을 사용해 goal-directed graph generation을 한다. <b>질문:</b> goal directive이면 아마 만들어가는데도 규칙이 있는거 같음
   * 두 모델 모두 순차적으로(sequentially) node를 추가하면서 그래프를 생성하는데, edge를 연결하는 방법에 있어 차이가 존재한다. <b>GraphRNN</b>은 hidden states를 이용해 action(edge)을 예측한다. 반면에 GCPN의 경우 각각의 node embedding을 GNN을 통해 구한 후 prediction head를 통해 action(edge)을 예측한다.
-    * <b>질문:</b> hidden states와 node embedding, <b>pedction head???</b> 임베딩으로 prediciton head를 통한다는게 뭔말일까? * graph에서 head가 노드 u일 확률이라고 생각하면 된다. 즉 v가 tail일 때 u가 헤드일 확률 -> 둘이 연결될 확률
+    * <b>질문:</b> hidden states와 node embedding, <b>pedction head???</b> 임베딩으로 prediciton head를 통한다는게 뭔말일까?
+      *  graph에서 head가 노드 u일 확률이라고 생각하면 된다. 즉 v가 tail일 때 u가 헤드일 확률 -> 둘이 연결될 확률 ![image](https://github.com/Jiwon96/papers/assets/65645796/4ef250a6-81ee-4d5e-b274-c7321487d335)
+
    
 * <b>train</b>
   * reward 정의: reward = final reward + step reward

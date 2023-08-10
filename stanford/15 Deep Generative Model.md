@@ -1,17 +1,17 @@
 # Graph Generation
 * given : Graphs sampled from $p_{data}(G)$ 
 * Goal:
-  * Lean the dist $p_{model}(G)$
+  * Learn the dist $p_{model}(G)$
   * sample from $P_{model}(G)$
 * 실제 그래프 분포 샘플들을 이용해 $P_{model}(G)$ 을 학습하고, 학습된 $P_{model}(G)$에서 샘플링하여 그래프 생성
 
-* <b>의문:</b> $p_{data}(G)$ 와 $p_{model}(G)$의 차이점은 무엇이지?
+* <b>의문:</b> $p_{data}(G)$ 와 $p_{model}(G)$의 차이점은 무엇이지? -> 우리의 목표는 그래프를 generate할 것임. 이 때 generate를 할 때는 kernel 함수를 이용해서 generate를 하는데 이 때 필요한게 parameter와 그 액션이 무엇이 나왔는지가 있어야 됨 이 때 $p_{data}(G)$는 우리가 여태까지 모은 데이터로 현실을 반영하는 예를 들면 $H_2O$ 같은 데이터들이고, parameter는 이제 우리가 이걸 학습해야 하는 값임. 그래서 어찌저찌해서 $\theta$에 대한 학습이 끝났으면 첫 번째 목표 달성임 이제 새로운 물질을 만들어 내기 위해서는 H에서 add edge를 하든 add node를 해야 하는데 이를 하는게$P_{model}(G)$임
   * $p_{data}(G)$  is the data distribution, which is never known to us, but we have sampled $x_i$ ~ $P_{data}(x)$
   * $P_{model}(x; \theta )$ is the model, parametrized by $\theta $, that we use to approximate $p_{data}(G)$
-  * <b>의문:</b> $P_{model}(x; \theta )$ 와 $p_{data}(G)$ 의 차이는? given에서 goal 되는 과정이 어떻게 되는지? $P_{model}(x; \theta )$  -> appoxim $p_{data}(G)$ -> Goal 2가지
+  * <b>의문:</b> $P_{model}(x; \theta )$ 와 $p_{data}(G)$ 의 차이는? given에서 goal 되는 과정이 어떻게 되는지? $P_{model}(x; \theta )$  -> appoxim $p_{data}(G)$ -> Goal 2가지 -> 후자 먼저 설명하면 $H_2O$처럼 실생활에서 얻은 데이터임 전자는 이제 실생활 데이터를 잘 학습하기 위한 확률적 모델일까나?
  
 * <b> Density Esimation</b>
-  * make $P_{model}(x; \theta )$ <b> close to</b> $p_{data}(G)$ <b>질문: 이것이 무엇을 의미하지? 다음 입력의 x인가? 아니면 다른 x와 edge가 연결될 것인가를 의미하나?</b>
+  * make $P_{model}(x; \theta )$ <b> close to</b> $p_{data}(G)$ <b>질문: 이것이 무엇을 의미하지? 다음 입력의 x인가? 아니면 다른 x와 edge가 연결될 것인가를 의미하나?</b> -> 이건 위에서도 잘 설명함. 파라미터 학습임 우리가 가진 데이터 잘 설명하는
     * $\theta^*$ = $argmax_{\theta}E_{x\sim p_{data}}logp_{model}(x|\theta)$
    
   * Maximum Likelihood Estimation을 이용한다. 즉, 표본들을 이용해 $p_{model}$의 likelihood를 최대로 하는 최적의 likelihood를 최대로 하는 최적의 parameter θ를 찾는다.
@@ -21,11 +21,12 @@
     * Sample from a simple noise distribution (e.g. standard normal distribution), $z_i \sim N(0,1)$
     * Transform the noise $z_i$ via $f({\centerdot})$, $x_i = f(z_i;\theta )$
       * $f({\centerdot})$ 를 deep neural network로 구성하고, 갖고 있는 데이터들을 이용해 학습시킨다.
-     
-* <b> 의문</b>: 그러면 $z_i$를 들을 linear나 그런 레이어로 transform 해서 $x_i$를 구하는 건가? <b>예시가 집중해서 보자</b>
-* <b> Auto-regressive models</b>
+   
+* <b> 의문</b>: 그러면 $z_i$를 들을 linear나 그런 레이어로 transform 해서 $x_i$를 구하는 건가? <b>예시가 집중해서 보자</b> -> ㄴㄴ auto-regressive model을 사용함 여기서는
+* <b> Auto-regressive models</b> -> 위에서 f라는 커널함수를 사용할 때 사용되는 함수임 이 때 variation auto encoder 등을 사용해도 됨
   * $P_{model} (x; \theta)$ 는 density estimation과 sampling에 사용되고, 이를 위해 auto-regressive model을 사용한다.
     * $P_{model}(x; \theta )$ = $\Pi^n_{t=1}P_{model}(x_t|x_1, \cdots , x_{t_1};\theta )$
+     * (강의 후 추가) 이 때 $x_i$는 t-th 액션이므로 add node나 add edge를 값으로 가짐 따라서 sequence는 add edge, add node .... 이런식으로 sequence를 구성
    
   * Idea: Joint distribution이 conditional distribution들의 곱으로 표현될 수 있는 Chain rule을 이용한다.
   * 이를 위해 $X = (x_1, x_2, \cdots, x_t)$를 sequence로 보고, $x_t$는 t번째 행동이 된다. 여기서 행동은 node 또는 edge를 추가하는 것이다.
@@ -53,7 +54,10 @@
 # Graph RNN
 * <b> 종류</b>
   * Node-level RNN generates the initial state for edge-level RNN
-  * Edge-level RNN sequentially predict if the new node will connect to each of the previous node <b> ???? 예제</b>
+  * Edge-level RNN sequentially predict if the new node will connect to each of the previous node <b> ???? 예제</b> 그래프 G에서 adjaency matrix로 변환된 것을 보면 h1에서 h2로 갈 때 노드가 생김 이걸 node level graph net임 그리고 이를 다시 h3에서 반복한 후 노드 2가 추가되는데 2번 째 노드가 [1,0]이 되는 것을 볼 수 있다. 이것을 2번 노드에 대해서 edge 그래프를 만들어 내는 것을 볼 수 있다. ![image](https://github.com/Jiwon96/papers/assets/65645796/ab9b8b33-1a11-4c3b-bb49-a822c6f2fd37) ![image](https://github.com/Jiwon96/papers/assets/65645796/d1b724d3-2b22-411a-899b-1a38f50839fd)
+
+
+
 * <b>구조</b>
   * 이전 출력을 입력으로 사용해 sequence를 생성
     * Start of sequence token(SOS)를 초기(initial) 입력으로 사용
@@ -67,9 +71,10 @@
 * <b> Test Time</b>
   * $y_t$의 확률에 따라 $x_{t+1}을 샘플링해서 다음 단계 입력으로 사용 -> $y_1$= 0.9이면 $x_2 = 0.9 \sim 1$??? 여기 부분 이해 X <br>![image](https://github.com/Jiwon96/papers/assets/65645796/7cc54103-cf46-4eea-9050-d5c9349b5c7f)
  
-* <b> Training Time </b> 질문: 왜 test time -> Training time 이지?
-  * ground truth $y^*$와 prediction $y$를 비교해 loss를 계산하고, [teacher forcing](https://wikidocs.net/24996)을 이용해 다음 단계 입력으로 ground truth를 사용 <b>질문: ground truth는 뭐지 어떻게 구하지?</b>
-  * $L = -y^{*}_1log{(y_1)} + (1-y^*_1)log{(1-y_1)}$ binary cross entropy (사진 넣자)
+* <b> Training Time </b> 질문: 왜 test time -> Training time 이지? 상관없음
+  * ground truth $y^*$와 prediction $y$를 비교해 loss를 계산하고, [teacher forcing](https://wikidocs.net/24996)을 이용해(다음 값에 정확한 값을 넣어서 훈련을 잘 시키기 위함 학습 데이터 활용하는 것) 다음 단계 입력으로 ground truth를 사용 <b>질문: ground truth는 뭐지 어떻게 구하지?</b>
+  * $L = -y^{*}_1log{(y_1)} + (1-y^*_1)log{(1-y_1)}$ binary cross entropy (사진 넣자) -> 사진을 넣기보다는 태블릿 슬라이드 27부터 천천히 보면 됨
+
 
 * <b> 훈련과 테스트 타임을 같이 (Testime, Training time) </b>
   * Add a new node: Node RNN을 실행하고, Node RNN의 출력을 Edge RNN의 초기치로 사용 <b>질문: Node RNN은 Node level이고 Edge RNN은 Edge 레벨인가?</b>
@@ -78,7 +83,7 @@
   * Stop graph generation: Edge RNN이 EOS를 출력하면 그래프 생성을 종료
 
 * Traning
- * 사진 예제 대체
+ * 사진 예제 대체 -> 사진을 넣기보다는 태블릿 슬라이드 27부터 천천히 보면 됨
 
 # Tractability
 * Random node ordering의 경우 edge generation시 이전의 모든 노드들을 고려해야해서 복잡도가 증가하고, long-term dependency 문제가 발생한다. 이를 해결하기 위해 BFS(Breadth-First Search) node ordering을 사용한다.
@@ -104,6 +109,9 @@
     * $k$: kernel function
     * <b> 숙제: MMD가 의미하는바는 무엇인지</b>
 
+<b> EMD와 MMD를 잘 찾아보는게 필요할 것 같다. </b>
+
+
 # application of Deep Graph Generative Models
 * 그래프 생성 모델을 사용해 신약 개발(drug discovery)에 활용할 수 있다. 이를 위해서는 다음 조건을 만족해야 한다.
   * Optimize a given objective (high scores): 약과 같은 특성을 갖게 최적화 되어야 한다.
@@ -118,7 +126,7 @@
   * <b>Reinforcement learning</b>으로 desired objectives를 따르게 생성한다.
   * <b>supervised training</b>으로 주어진 데이터셋을 모방한다. <b>숙제:</b> 이 3개가 왜 중요하지?
  
-* <b>GCPN vs GraphRNN</b>
+* <b>GCPN vs GraphRNN</b> GCPN 논문을 나중에 참고해야 할 듯 아직 잘 모르겠음.
   * 공통점: Sequentially 그래프를 생성, 주어진 그래프 데이터셋 모방
   * 차이점:
    * GCPN은 generation action을 예측하기 위해 GNN을 사용한다. <b>질문</b> generation action?
@@ -127,7 +135,7 @@
     
    * GCPN은 RL을 사용해 goal-directed graph generation을 한다. <b>질문:</b> goal directive이면 아마 만들어가는데도 규칙이 있는거 같음
   * 두 모델 모두 순차적으로(sequentially) node를 추가하면서 그래프를 생성하는데, edge를 연결하는 방법에 있어 차이가 존재한다. <b>GraphRNN</b>은 hidden states를 이용해 action(edge)을 예측한다. 반면에 GCPN의 경우 각각의 node embedding을 GNN을 통해 구한 후 prediction head를 통해 action(edge)을 예측한다.
-    * <b>질문:</b> hidden states와 node embedding, <b>pedction head???</b> 임베딩으로 prediciton head를 통한다는게 뭔말일까?
+    * <b>질문:</b> hidden states와 node embedding, <b>pedction head???</b> 임베딩으로 prediciton head를 통한다는게 뭔말일까? * graph에서 head가 노드 u일 확률이라고 생각하면 된다. 즉 v가 tail일 때 u가 헤드일 확률 -> 둘이 연결될 확률
    
 * <b>train</b>
   * reward 정의: reward = final reward + step reward

@@ -66,7 +66,7 @@
 * Robustness
   * 딥러닝 네트워크는 adversarial attack에 취약하다.
   * 모델이 real world에 적용되기 위해서는 robustness를 갖추는 것이 중요하다.
-  * input 그래프나 GNN의 prediction이 조작되었을 때 robust해야 하므로 semi-supervised node classification을 한다. <b>semi-supervised node classification 뭐지? </b>
+  * input 그래프나 GNN의 prediction이 조작되었을 때 robust해야 하므로 semi-supervised node classification을 한다. <b>semi-supervised node classification 뭐지? [semi supervised](https://sanghyu.tistory.com/177) </b>
 
 * Attack Possiblitieis
   * Target node $t \in V$는 label prediction을 바꾸고자 하는 노드이다.
@@ -76,15 +76,13 @@
  
 * Mathmatical Formulatioin<br>![image](https://github.com/Jiwon96/papers/assets/65645796/f1707532-e35f-46c1-9e51-86f659719aac)
   * Attacker는 조작은 최소화하면서 target node label prediction의 변화는 최대가 되도록 해야 한다.
-  * Original 그래프의 인접행렬을 $A$, feature 행렬을 $X$라 하고 manipulated 그래프의 행렬들을 A' X'이라 하자 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/855157f1-a99a-4dc2-97a6-287ccda62814) ![image](https://github.com/Jiwon96/papers/assets/65645796/57db2364-6f03-4cf8-9e71-061848c2093e)
+  * Original 그래프의 인접행렬을 $A$, feature 행렬을 $X$라 하고 manipulated 그래프의 행렬들을 A' X'이라 하자 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/855157f1-a99a-4dc2-97a6-287ccda62814)
   * GCN은 loss를 최소화하는 $\theta$를 찾고 target node에 대한 예측 확률이 최대인 클래스를 $c^*_v$라 한다.
-  * 조작 후의 예측 클래스와 이전의 예측 클래스와 달라지기를 원한다.? <b>왜? 어떤것을 의미하는 걸까? 목적이 무엇일까?</b> <br>![image](https://github.com/Jiwon96/papers/assets/65645796/632d855d-c0b5-4964-8a7a-256c5b9a9cd0)
+  * 조작 후의 예측 클래스와 이전의 예측 클래스와 달라지기를 원한다.? <b>왜? 어떤것을 의미하는 걸까? 목적이 무엇일까?</b> -> 차이가 크다는 것은 취약 노드 or 취약 에지라는 것을 의미하기 때문에 이러한 노드들을 찾기 위한 task이다.  <br>![image](https://github.com/Jiwon96/papers/assets/65645796/632d855d-c0b5-4964-8a7a-256c5b9a9cd0) .
+  * 새롭게 예측된 $c^*_v$ 의 예측 확률과 기존에 예측되었던 $c'^*_v$의 확률의 차이가 (A', X') $\sim$(A,X)라는 가정 하에 최대가 되어야 한다 <b> 여기서 잘 이해가 필요하다</b> => 최소한으로 수정되었을 때 클래스 변화 확률이 가장 큰 곳에서 취약하다는 것이지 즉, 슬라이드 57~58을 보면 살짝 변형했을 때 retraining에서 원래 예측값 6에서 7로 가장 크게 가는 것을 확인할 수 있음 따라서 여기가 취약한 것임 in GCN
+  * 인접행렬 A'가 이산적이기 때문에 gradient를 활용한 최적화가 불가능하고 모든 A', X' 에 대해 GCN이 retrain 되어야 한다는 문제가 있다. <b> 공부해야 한다</b> <- semi supervised 특징이기 때문임 잘 읽어보삼
+  * GCN은 adversarial attacks 에서 다소 robust하지 않음.
+
  
-  * 새롭게 예측된 $c^*_v$의 예측 확률과 기존에 예측되었던 c^*_v의 확률의 차이가 (A', X') $\sim$(A,X)라는 가정 하에 최대가 되어야 한다 <b>여기서 잘 이해가 필요하다</b>
-  * 하지만, 인접행력 A'가 이산적이기 때문에 gradient를 활용한 최적화가 불가능하고 모든 A', X' 에 대해 GCN이 retrain 되어야 한다는 문제가 있다. <b> 공부해야 한다
-
-  
-
-
 
 [글 참고, 여기서 의문이 드는건 강의 듣고 추가함](https://velog.io/@kimkj38/CS224W-Lecture-16.-Advanced-Topics-on-GNNs)

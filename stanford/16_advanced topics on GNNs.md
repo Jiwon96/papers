@@ -4,13 +4,13 @@
   * BUT 같은 구조 갖더라도 그래프 상에서 다른 위치에 있어 다른 임베딩을 가지길 원할 수 있음.
  
 * Problem2:
-  * 지금까지 배운 GNN은 완벽하지 않음. 예를 들어 emssage passing GNN은 cycle length 를 세지 못해 $v_1과 v_2가 같은 구조임에도 불구하고 같은 computationial graph 가짐 (Lecture 9, WL test 참고)
+  * 지금까지 배운 GNN은 완벽하지 않음. 예를 들어 emssage passing GNN은 cycle length 를 세지 못해 $v_1$과 $v_2$가 같은 구조임에도 불구하고 같은 computationial graph 가짐,(추가): 또한 expression power가 WL test보다 클수가 없음 즉 upper bound 임 (Lecture 9, WL test 참고)
  
 * Solution: 위치를 고려한 Position-aware GNNs, WL test보다 표현력이 뛰어난 Identity-aware GNNs
 
 * Naive Approach
   * 서로 다른 input(nodes, edges, graphs)에 대해 다르게 라벨링 되어야 한다.
-  * 원핫 인코딩을 통해 각 노드를 다른 ID로 인코딩하는 방식을 생각해볼 수 있지만 O(N)의 feature dimension이 필요하며 새로운 노드/그래프에 대해 일반화할 수 없다는 문제가 있다.
+  * 원핫 인코딩을 통해 각 노드를 다른 ID로 인코딩하는 방식을 생각해볼 수 있지만 O(N)의 feature dimension이 필요하며 새로운 노드/그래프에 대해 일반화할 수 없다는 문제가 있다. 추가: not inductive 한데 즉 기존 노드에서 노드가 추가되면 기존 그래프와 완전히 달라지기 때문에 어떻게 고려해야 할 지 어렵다.
  
 # Position-aware Graph Neural Networks
 * Two types of tasks

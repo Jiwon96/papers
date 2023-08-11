@@ -59,7 +59,7 @@
 
   * GNN과 달리 ID-GNN은 cycle count를 계산할 수 있다.
   * ID-GNN-Fast에서는 각 레이어에서의 cycle count로 augmented node feature를 heterogenous message passing 없이 간단하게 identity 정보를 가질 수 있다.
-  * 컬러링을 하면서 각 hop마다 컬러링 되어있는 노드를 개수를 세면 cycle(다시 컬러링 된 노드를 만나는것)이 어떻게 되어있는지 알 수 있다. <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c76d255c-e571-4f77-814b-1c631febc53b)
+  * <b>추가</b>컬러링을 하면서 각 hop마다 컬러링 되어있는 노드를 개수를 세면 cycle(다시 컬러링 된 노드를 만나는것)이 어떻게 되어있는지 알 수 있다. <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c76d255c-e571-4f77-814b-1c631febc53b)
 
 
 # Robustness of Graph Neural Network <집중 필요>

@@ -17,8 +17,8 @@
   * Structure-aware task
   * Position-aware task<br>![image](https://github.com/Jiwon96/papers/assets/65645796/627b2ef4-2578-4fd4-8a20-bd857717be97)
 
-* 노드가 sturucture에 의해 라벨링 될 때 GNN은 서로 다른 computational graph를 만들어 $v_1$, $v_2$를 구분할 수 있다.
-* 노드가 position에 의해 라벨링 될 때 GNN은 v_1과 v_2가 같은 computational graph를 가지도록 만들어 구분을 못한다.
+* 노드가 structure에 의해 라벨링 될 때(가정) GNN은 서로 다른 computational graph를 만들어 $v_1$, $v_2$를 구분할 수 있다. <- structual problem은 해결됨
+* 노드가 position에 의해 라벨링 될 때 GNN은 $v_1$과 $v_2$가 같은 computational graph를 가지도록 만들어 구분을 못한다. <- $v_1$과 $v_2$는 같은 임베딩이 될 것
 * Position-aware task를 잘 수행하기 위해 anchor를 활용한다.
 
 * Power of "Anchor"<br>![image](https://github.com/Jiwon96/papers/assets/65645796/55036efa-194f-49e6-90e9-711fef5fe50c)
@@ -32,31 +32,35 @@
 * Large achor set은 더 정확한 위치 추정 가능
 * Anchor를 통해 position을 알면 potision encoding을 augmented node feature로 활용할 수 있다.
 * <b>변경</b>축을 어떻게 표현하는지에 따라 Position encoding이 바뀔 수 있지만(s1, s2, s3 $\neq$ s1,s3,s2 의 임베딩) 각 차원에서의 값은 그대로이므로 의미가 변하지는 않는다. <b>추가</b> (모든 데이터가 이 순서로 들어올 것이므로 1:1 대응이 될 것이라 생각할 수 있음)
+* (추가) 그렇다면 어떻게 anchor set을 만들어야 할까? <- feature matrix를 활용해서 하면 되지 않을까? ㄴㄴ feature matrix는 입력 order에 따라 다른 결과를 내기 때문에 aggregator같은 함수로 사용해야됨
+* 어떻게 position information을  나타낼 수 있을까에 대한 질문은 계속 이어짐...
 
 # Identity-Aware Graph Neural Networks <이 부분은 이해가 잘 안간다>
 * Failure cases of structure-aware tasks
   * Node-level<br>![image](https://github.com/Jiwon96/papers/assets/65645796/c511ba9c-6df2-4434-8583-7384da2cd6b5)
   * $v_1$과 $v_2$는 다른 구조를 가지지만 같은 computational graph 가짐 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/bfe00c3f-b4e3-4c81-9976-5691de9d8947)
-  * <b>숙제 이해가 안되는 부분</b>
+  * <b>숙제 이해가 안되는 부분</b> -> 삼각형의 노드를 v2 v3의 순서를 바꿔도 좌 순서와 우 순서가 같음
     * 임베딩 하고 싶은 노드에 색을 지정하여 ordering/identities invariant한 inductive function을 만들 수 있다.
     * 같은 구조 상에서 $v_2, v_3$ 의 순서가 바뀌어도 동일한 임베딩을 가진다. 즉, 일반화 성능에 도움이 된다.
     * 다른 구조를 가지는 노드는 다른 computational graph를 만든다.
    
   * Edge-level<br>![image](https://github.com/Jiwon96/papers/assets/65645796/16eacd96-d270-426e-8aa9-f960b8a32795)
-    * $v_0$가 엣지 $A, B$를 가지는지에 대한 link prediction을 하는 경우에도 $v_1, v_2$가 같은 임베딩을 가지기 때문에 문제가 생긴다. <b> <- 이 부분은 이해가 안가므로 잘 들어봐야 겠다</b> <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c6d5aa1c-027d-463b-9c65-7337ad75abe3)
+    * $v_0$가 엣지 $A, B$를 가지는지에 대한 link prediction을 하는 경우에도 $v_1, v_2$가 같은 임베딩을 가지기 때문에 문제가 생긴다. <b> <- 이 부분은 이해가 안가므로 잘 들어봐야 겠다</b> <-v1과 v2를 computational graph를 그려보면 컬러링을 안하면 같은 hop에서 구조가 같기 때문에 같은 구조를 갖게되고 그러면 edge TAST를 할 때 같은 값을 갖을 것임 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c6d5aa1c-027d-463b-9c65-7337ad75abe3)
 
-    * Coloring을 활용하면 $v_1, v_2$ 를 구별할 수 있다. <b> 이게 뭔말일까?</b>
+    * Coloring을 활용하면 $v_1, v_2$ 를 구별할 수 있다. <b> 이게 뭔말일까? -> 말그대로 우리가 원하는 노드(임베딩할 노드)에 컬러링을 한다는 것임</b>
     * $v_0와 v_1$ 혹은 $v_2$ 와의 노드 쌍이 다른 임베딩을 가지기 때문에 link prediction을 할 때 문제가 없다.
   * Graph-level<br>![image](https://github.com/Jiwon96/papers/assets/65645796/0169f2c1-9eb1-499f-a536-56996be56734)
     * 다른 그래프에서도 A,B가 동일한 compuational graph 가짐
     * coloring <b> 어떻게 coloring이 효과적인지 살펴볼 필요가 있다</b><br>
     
 * Identity Aware GNN<br>![image](https://github.com/Jiwon96/papers/assets/65645796/5b4484fb-14fb-4138-8b34-d2300fa291ca)
-  * Coloring을 위해 노드에 따라 다른 network(message/aggregation)를 적용하는 heterogenous message passing을 활용한다.
+  * Coloring을 위해 노드에 따라 다른 network(message/aggregation)를 적용하는 heterogenous message passing을 활용한다. <- 컬러링이 되있는 노드와 안되어 있는 노드에 다른 transform과 aggregator를 적용한다.
   * $v_1$과 $v_2$은 같은 computational graph를 가지지만 서로 다른 네트워크에 의해 다르게 임베딩 된다.<br>![image](https://github.com/Jiwon96/papers/assets/65645796/d9562171-4222-4532-8ec1-6c146133b93a)
 
   * GNN과 달리 ID-GNN은 cycle count를 계산할 수 있다.
   * ID-GNN-Fast에서는 각 레이어에서의 cycle count로 augmented node feature를 heterogenous message passing 없이 간단하게 identity 정보를 가질 수 있다.
+  * 컬러링을 하면서 각 hop마다 컬러링 되어있는 노드를 개수를 세면 cycle(다시 컬러링 된 노드를 만나는것)이 어떻게 되어있는지 알 수 있다. <br>![image](https://github.com/Jiwon96/papers/assets/65645796/c76d255c-e571-4f77-814b-1c631febc53b)
+
 
 # Robustness of Graph Neural Network <집중 필요>
 * Robustness

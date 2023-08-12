@@ -1,6 +1,6 @@
 # an_unsupervised_neural_Attention_Model_for_Aspect_Extraction 논문 정리
 * 기존 문제점: aspect 추출
-  * rule-based: aspect를 그룹핑을 하지 못하는 현상이 있음.
+  * rule-based: aspect를 실제 extracted aspect terms가 categories로 연결하지 못함..
   * LDA:
     * 한 주제라고 specific하는게 약함. <- word co-occurrence에 대해 취약하기 때문
    

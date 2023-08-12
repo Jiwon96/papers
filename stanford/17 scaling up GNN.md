@@ -1,4 +1,4 @@
-![image](https://github.com/Jiwon96/papers/assets/65645796/d1af2b2c-7145-444c-8241-9895c848ac03)# Scaling Up Graph Neural Networks to Large Graphs
+# Scaling Up Graph Neural Networks to Large Graphs
 * 기존 그래프 방식의 문제점
   * 이웃노드에서 message를 전달받는 GNN의 미니배치를 활용해 일부 노드만 샘플링 하는게 어려움
   * FULL batch 또한 GPU 병렬 연산을 효과적으로 활용할 수 없음.

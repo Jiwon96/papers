@@ -5,7 +5,7 @@
   * example<br>![image](https://github.com/Jiwon96/papers/assets/65645796/8796591c-b5a5-4268-90a3-cffcd8c4354c)
 
 * Relation GCN
-  * heterogeneous graphs를 GCN을 활용해 모델링해보자.
+  * heterogeneous graphs를 GCN을 활용해 모델링해보자.(노드 예측) 
   * Layer 구성
 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/878e805c-7fca-4c42-9623-9a5f2992e385)
 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/4e452738-0851-48a1-b818-b29f2572471f)

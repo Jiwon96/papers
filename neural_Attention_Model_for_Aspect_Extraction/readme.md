@@ -1,4 +1,11 @@
 # an_unsupervised_neural_Attention_Model_for_Aspect_Extraction 논문 정리
+* 기존 문제점: aspect 추출
+  * rule-based: aspect를 그룹핑을 하지 못하는 현상이 있음.
+  * LDA:
+    * 한 주제라고 specific하는게 약함. <- word co-occurrence에 대해 취약하기 때문
+   
+  * 따라서 lda의 문제를 극복하고자 abae로 indivisual aspect를 잘 추출해보고자 함.
+   
 * 목표: 우리가 가진 문장에서 가장 잘 대표할 수 있는 토픽 메트릭스를 구해보자
   * 이 때 각 토픽끼리 겹치지 않게 하는게 굉장히 중요하다
  

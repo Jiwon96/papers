@@ -14,16 +14,20 @@
  
 * <b>Neighbor Sampling</b><br>![image](https://github.com/Jiwon96/papers/assets/65645796/d9581937-b8f3-4337-a207-c4249fedd261)
 
-  * 각 hop에서 <b>H개의 이웃 노드를 샘플링</b>하여 computational graph를 구성하면 연산량을 줄일 수 있음
+  * 각 hop에서 <b>H개의 이웃 노드를 샘플링</b>하여 computational graph를 구성하면 연산량을 줄일 수 있음 <b>추가</b> upper bound $H^k$
   * <b>but </b> H가 줄어듬에 따라 연산량이 줄지만, variance가 크기 때문에 학습이 불안정(underestimate 할 수 있음)
   * 샘플링을 랜덤하게 할 경우 빠르지만 optimal 하지 못함
   * 해결법 Random Walk with Restarts score $R_i$를 구해 중요한 노드들을 샘플링(랜덤이 아니라)하면 더 효과적일 수 있다. (연산량의 문제는 괜찮나? 어떻게 구하지)
- 
-* Issues with Neighbor Sampling<br>![image](https://github.com/Jiwon96/papers/assets/65645796/a7f0d838-5caa-4ce4-a19e-592cdcac6dda)
+
+  * <b> (*************************)추가********************</b>
+  * degree가 굉장히 높다면 batch_size는 굉장히 작아질 수 밖에 없음... batch_size가 작으면,,, variance가 굉장히 커지기 때문에 정확하지 않을 수가 있음.
+  * 현재까지 neighbor sampling 을 어떻게 할 것인지에 대해서 많은 연구가 진행되고 있음.
+
+ <b>Issues with Neighbor Sampling</b>![image](https://github.com/Jiwon96/papers/assets/65645796/a7f0d838-5caa-4ce4-a19e-592cdcac6dda)
   * Neighbor Sampling은 <b>GNN layer 수에 따라 computational graph의 크기가 지수적으로 증가</b>한다. <b>?????왜지? Random walk with restart score와 관련이 있을까?</b>
   * 또한, 미니배치의 노드들이 공유 이웃이 많으면 연산이 중복되기 때문에 연산 효율이 떨어짐. (C D를 두번 계산해야됨)
 
-* <b>Cluster-GCN: Scaling up GNNs</b><br>![image](https://github.com/Jiwon96/papers/assets/65645796/adfa3fc9-572b-497a-b385-ff40dc1bc8d3)
+ # Cluster-GCN: Scaling up GNNs<br>![image](https://github.com/Jiwon96/papers/assets/65645796/adfa3fc9-572b-497a-b385-ff40dc1bc8d3)
   * <b>Layer-wise node embedding update는 이전 레이어에서의 임베딩을 재사용</b>하기 때문에 neighbor sampling의 불필요한 연산을 줄여준다.
   * <b> but</b> large graph에서 <b>GPU 메모리 한계</b>가 있음
   * subgraph 샘플링을 활용하면 메모리 한계 문제를 극복할 수 있음<br>![image](https://github.com/Jiwon96/papers/assets/65645796/3e3e429f-6009-48d1-b3a4-529b1be6191f)
@@ -51,7 +55,8 @@
   * H개의 이웃노드를 샘플링 하기에 하나의 노드는 $H_k$ 만큼 걸린다고 가정하면 M개의 메시지를 받기 위해서는 $M\times H^K$ 의 시간 복잡도를 가짐
   * Cluster-GCN은 M개 노드에 대해 induced subgraph 만들고, $D_{avg}$는 평균 node degree, K는 레이어 수라고 할 때 시간 복잡도는 $K\times M \times D_{abg}$가 된다.
   * Cluster-GCN의 시간복잡도는 <b>선형적으로 증가</b>하므로 효율적이지만 K가 크지 않다면 <b>neighbor sampling을 주로</b> 쓴다.
-
+  * <b>(************************************ 추가**********************************)</b> 왜 Cluster GCN은 선형 복잡도를 갖는것이라 말하는거지? 이해가 안된다.
+  * inductive graph가 굉장히 많이 쓰이므로 이를 복습할 때 잘 이해하고 넘어가자.
 
 # Sacling up by Simplifying GNNs
 * <b>Recall </b> <br>![image](https://github.com/Jiwon96/papers/assets/65645796/0acb024b-0c9f-4723-b4a0-7e2a05165e19)
@@ -70,14 +75,14 @@
     * 
     * ....
     * $h^{(K)} _{v_M}$ = $WX^{\sim} _{v_M}$
-  * Pre-grocessing 에서는 $A^{\sim k}X$ 가 cpu로 계산
+  * Pre-grocessing 에서는 $A^{\sim k}X$ 를 미리 계산하면 됨
   * min-batch training 과정에선 <b>M개의 노드가 랜덤하게 샘플링 되어</b> 임베딩 $h{(K)} _{v_i}가 계산됨. 임베딩을 통해 예측한 값과의 loss로 parameter를 업데이트 한다.
  
 # Comparison with other methods
 * Neighbor sampling에 비해 <b>노드 임베딩을 더 효율적</b>으로 만들며 Cluster-GCN처럼 그룹을 활용하지 않기 때문에 전체 노드로부터 완전히 랜덤하게 샘플링하여 <b>variance를 줄일</b> 수 있다.
 * 하지만, non-linearity가 없어 기존 GNN 모델에 비해 <b>표현력이 떨어진다는 한계</b>가 있다. <br>![image](https://github.com/Jiwon96/papers/assets/65645796/789fc597-8a4a-4abe-a525-a19b7fbd246e)
 * 그럼에도 불구하고 많은 node classification task에서 연결된 노드들이 동일한 target label을 가지는 <b>homophily structure</b>를 보이기 때문에 original GNN과 유사한 성능을 보인다.
-  * (ex. Social network에서 두 사람이 친구인 경우 같은 영화를 좋아하는 경향이 있다)
+  * (ex. Social network에서 두 사람이 친구인 경우 같은 영화를 좋아하는 경향이 있다) <b>추가</b> 사회에서 비슷한 사람끼리 어울리는 느낌, 즉 비슷한 사람이면 노드 임베딩이 비슷함
 * Pre-processing 과정에서 feature는 반복적으로 이웃 노드의 feature를 평균내 얻으므로 연결된 노드들이 유사한 feature를 가지고 이는 <b>homophily structure 하에서 잘 작동</b>한다.
 
 

@@ -4,8 +4,9 @@
 * noisy due to inherent natural variation, limitation of measurement platforms
 
 # Safe drugs and drug combinations -> Multi-relational link prediction on KGs
-* the problems: Patients take multiple drugs to treat complex or co-existing diseases. but durg combination 힘듬
-  * combination 수가 너무 많음
+* 약물 혼합 복용을 했을 때 부작용을 예측할 수 있는 task임 즉 edge(relation) 예측 task임
+* the problems: Patients take multiple drugs to treat complex or co-existing diseases. but drug combination 힘듬
+  * drug combination 수가 너무 많음 <- 모든  set을 고려할 수 없음
   * interaction의 activation이 non-linear함
   * 환자들 군집이 너무 다양함.
  
@@ -18,6 +19,7 @@
 
 
 # Patient outcomes & disease classification
+* graph classification 문제임, 더 알고 싶으면 SubGNN 논문을 찾아볼 것.
 * Disease Diagnosis: 환자 증상이 관측가능함 -> 증상에 따른 모델링을 해 환자를 진단할 것
   * graph: 증상 노드들로 구성되어 있다고 가정
   * Node: 증상
@@ -27,11 +29,14 @@
  
 * Challeging
   * sub graph의 size가 다양함
-  * internal node와 external node 어떻게? 관계?
+  * sub graph는 다른 그래프와 internal node와 external node 와 연결되어 있으므로 상당히 복합함
     * Localized: S1 = {s1, s2, ..} 한 sub graph 내부
     * Distributed: sub graphS={ S1, S2 ....} 진단명 집합
-   
-* Task
+      
+* 아이디어:
+  * sub graph의 neighborhood, structure, position 의 3 채널을 가지고 sub graph를 임베딩 한 후에 subgraph 끼리 4가지 지표를 활용해 비교할 것임(density, cut ratio, coreness, component)
+ 
+* 이 문제는 Subgraph prediction learning Task로 아래에 언급되어 있는 task와는 조금 다름 왜냐하면 G에서 sub group을 나누고 그에 대한 비교이므로
   * Node Prediction: pred property of a node
   * Link Prediction: predict property of a node pair
   * Graph Prediction: ""             of an entire graph
@@ -41,23 +46,26 @@
   * Property-aware routing<br>![image](https://github.com/Jiwon96/papers/assets/65645796/1e831ccf-89e0-41f4-b1c0-178607fad4fa)
 
 # Effective disease treatments
+* Drug 후보군을 진달하기 위함. link prediction 문제임 in bipartite graph
+ 
 * Challenging
   * 진단이 충분하게 labeled 되어야됨 but label이 scarce함
+  * 아직 모르는 병이 너무 많고, 실제에서 효과적으로 입증된 레이블이 부족함
  
 * Meta Learning
+  * 레이블이 부족할 때 사용하는 머신러닝 방법임
   * 잠재적으로 나올 데이터를 고려하여 optimize함 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/05882ab0-0e48-4c47-8671-6f6766e021e0)
   * one dataset이 one data sample로 고려됨
  
-* Few-shot learning: ????? <b>여기서 집중해서 봐야됨 잘 이해가 안되네</b>
-  * K-shot N-calss classfication
- 
-* G-Meta: given 데이터로 학습한 후에 unseen 진단으로 test를 진행함, 즉 y-label이 train에서와 test에서가 다름.
+* Few-shot learning:
+  * training task에서는 query set과 레이블은 같지만 feature가 조금은 다른 데이터를 학습시키고 label set에 feature가 다른 애들을 테스트함 또한 Test set에서도 training task에서 학습시킨 레이블과 다른 레이블을 테스트하는것 <br>![image](https://github.com/Jiwon96/papers/assets/65645796/3fd0ec90-594a-41f8-90da-7c7f4ee6d697)
 
 * Local Subgraph Power:
   * Label propagation:
-    * label이 sparse하면 효과적이지 않음
+    * label이 sparse하기 때문에 현실에서는 label propagation이 효과적이지 않을 수 있음 따라서 struct similiarity를 활용해 분포 학습하는게 굉장히 중요할 수 있음.
   * Struct similiarity: structural equivalence leverage를 하는게 굉장히 중요함
  
 * 이론 2개<br>![image](https://github.com/Jiwon96/papers/assets/65645796/2d885092-97cb-482d-bc76-c6a74956d8b6)
 
+* 효과적인 예시: 실제로 비교했을 때 embedding space를 보면 covid-19에 대해서 약물을 re-purpose하고 simulation했더니 다른 메서드에 비교해서 (바이러스가 인간 단백질에 붙거나 등등 예방 효과에 대해서) ROC score가 굉장히 높았고 실제로도 hit ratio가 굉장히 높았음
 

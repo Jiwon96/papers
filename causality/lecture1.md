@@ -20,3 +20,13 @@
   * $E[Y_i {(1)} - Y_i {(0)}] = E[Y {(1)}] - E [Y{(0)}] \neq E[Y | T=1] - E [Y | T = 0]$
   * 제일 우변에서 등호가 성립안하는 이유는 Confounder 때문이라고 함.
   * 이거 pill 예제에서 A, B를 대입해서 이해하면 될 거 같다.
+
+
+* Main Theme
+ * Statistical vs Causal :
+  * 무한정 데이터가 있을 때 stat은 uncertainty를 어느정도 해결 가능 but causal은 밝혀내지 못할 때도 많음
+ * identification vs Estimation
+ * Interventional vs Observational
+  * Confounding이 데이터내에 존재하기 때문에 effect를 측정하기가 어렵.
+ * Assumptions
+  * causality를 사용하기 위한 assumption도 주목 포인트임

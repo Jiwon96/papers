@@ -23,10 +23,10 @@
 
 
 * Main Theme
- * Statistical vs Causal :
-  * 무한정 데이터가 있을 때 stat은 uncertainty를 어느정도 해결 가능 but causal은 밝혀내지 못할 때도 많음
- * identification vs Estimation
- * Interventional vs Observational
-  * Confounding이 데이터내에 존재하기 때문에 effect를 측정하기가 어렵.
- * Assumptions
-  * causality를 사용하기 위한 assumption도 주목 포인트임
+  * Statistical vs Causal :
+    * 무한정 데이터가 있을 때 stat은 uncertainty를 어느정도 해결 가능 but causal은 밝혀내지 못할 때도 많음
+  * identification vs Estimation
+  * Interventional vs Observational
+    * Confounding이 데이터내에 존재하기 때문에 effect를 측정하기가 어렵.
+  * Assumptions
+    * causality를 사용하기 위한 assumption도 주목 포인트임
